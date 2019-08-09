@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { FeedService } from '../feed/feed.service';
 import { User } from '../mocks/types';
 import { ChatService } from './chat.service';
@@ -18,7 +18,9 @@ interface Conent {
 export class ChatPage implements OnInit {
   @ViewChild('input', { static: false })
   input: any;
-
+  @ViewChild(IonContent, { static: false })
+  content: IonContent;
+  public chatUser: User;
   public currentUser$: Observable<User>;
   public chatContent: Conent[] = [];
 
@@ -28,17 +30,33 @@ export class ChatPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.currentUser$ = this.chatService
-      .getCurrentUser()
-      .pipe(tap(console.log));
+    this.currentUser$ = this.chatService.getCurrentUser();
+    this.chatUser = this.chatService.getChatUser().value;
     this.feedService.getContentItems().then(console.log);
   }
 
-  sendMsg(user: User, message: string) {
-    this.chatContent.push({
-      userId: user.id,
-      message: this.input.value
-    });
+  sendMsg(user: User) {
+    if (this.input.value) {
+      this.chatContent.push({
+        userId: user.id,
+        message: this.input.value
+      });
+      this.scrollToBottomAndClearValue();
+    }
+  }
+
+  onDoubleClick() {
+    if (this.input.value) {
+      this.chatContent.push({
+        userId: this.chatService.getChatUser().value.id,
+        message: this.input.value
+      });
+      this.scrollToBottomAndClearValue();
+    }
+  }
+
+  scrollToBottomAndClearValue() {
     this.input.value = '';
+    this.content.scrollToBottom();
   }
 }

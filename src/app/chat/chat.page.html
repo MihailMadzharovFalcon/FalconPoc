@@ -3,29 +3,36 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-label *ngIf="currentUser$ | async as currentUser">{{
+      currentUser.name
+    }}</ion-label>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen *ngIf="currentUser$ | async as currentUser">
-  <ion-infinite-scroll position="bottom" threshold="100%">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+<ion-content
+  fullscreen
+  *ngIf="currentUser$ | async as currentUser"
+  class="ion-justify-content-end"
+  (dblclick)="onDoubleClick()"
+>
   <ion-list>
-    <ion-item
-      *ngFor="let content of chatContent"
-      lines="none"
-      class="ion-text-justify"
-      slot="start"
-    >
+    <ion-item *ngFor="let content of chatContent" lines="none" slot="start">
       <ion-card
         [color]="content.userId === currentUser.id ? 'primary' : 'light'"
+        [slot]="content.userId === currentUser.id ? 'start' : 'end'"
       >
         <ion-card-content>
           {{ content.message }}
         </ion-card-content>
       </ion-card>
       <ion-avatar [slot]="content.userId === currentUser.id ? 'start' : 'end'">
-        <img [src]="currentUser.thumb" />
+        <img
+          [src]="
+            content.userId === currentUser.id
+              ? currentUser.thumb
+              : chatUser.thumb
+          "
+        />
       </ion-avatar>
     </ion-item>
   </ion-list>
@@ -36,10 +43,10 @@
     <ion-input
       clearInput
       #input
-      (keydown.enter)="sendMsg(currentUser, input.value)"
+      (keydown.enter)="sendMsg(currentUser)"
     ></ion-input>
     <ion-buttons slot="primary">
-      <ion-button (click)="sendMsg(currentUser, input.value)">
+      <ion-button (click)="sendMsg(currentUser)" [disabled]="!input.value">
         <ion-icon slot="icon-only" name="send"></ion-icon>
       </ion-button>
     </ion-buttons>

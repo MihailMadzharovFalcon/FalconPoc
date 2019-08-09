@@ -10,12 +10,9 @@ export class ChatService {
     JSON.parse(localStorage.getItem('currentUser'))
   );
 
-  private chatUser: BehaviorSubject<User> = new BehaviorSubject({
-    id: '',
-    name: '',
-    thumb: '',
-    isFalconChannel: false
-  });
+  private chatUser: BehaviorSubject<User> = new BehaviorSubject(
+    JSON.parse(localStorage.getItem('chatUser'))
+  );
 
   setCurrentUser(user: User) {
     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -23,6 +20,7 @@ export class ChatService {
   }
 
   setChatUser(user: User) {
+    localStorage.setItem('chatUser', JSON.stringify(user));
     this.chatUser.next(user);
   }
 
