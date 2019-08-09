@@ -17,15 +17,32 @@
 >
   <ion-list>
     <ion-item *ngFor="let content of chatContent" lines="none" slot="start">
+      <ion-avatar *ngIf="content.userId === currentUser.id" [slot]="'start'">
+        <img
+          [src]="
+            content.userId === currentUser.id
+              ? currentUser.thumb
+              : chatUser.thumb
+          "
+        />
+      </ion-avatar>
       <ion-card
-        [color]="content.userId === currentUser.id ? 'primary' : 'light'"
+        [color]="checkCardColor(content.userId, currentUser.id, content.img)"
         [slot]="content.userId === currentUser.id ? 'start' : 'end'"
       >
-        <ion-card-content>
+        <ion-card-content *ngIf="content.message">
           {{ content.message }}
         </ion-card-content>
+        <ion-card-content *ngIf="content.img">
+          <ion-img [src]="content.img"></ion-img>
+        </ion-card-content>
       </ion-card>
-      <ion-avatar [slot]="content.userId === currentUser.id ? 'start' : 'end'">
+
+      <ion-avatar
+        *ngIf="content.userId !== currentUser.id"
+        [slot]="'end'"
+        class="ion-margin"
+      >
         <img
           [src]="
             content.userId === currentUser.id
@@ -48,6 +65,9 @@
     <ion-buttons slot="primary">
       <ion-button (click)="sendMsg(currentUser)" [disabled]="!input.value">
         <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onTakePicture(currentUser)">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

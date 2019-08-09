@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { IonContent } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { FeedService } from '../feed/feed.service';
@@ -6,8 +7,9 @@ import { User } from '../mocks/types';
 import { ChatService } from './chat.service';
 
 interface Conent {
-  message: string;
   userId: string;
+  message?: string;
+  img?: string;
 }
 
 @Component({
@@ -26,7 +28,8 @@ export class ChatPage implements OnInit {
 
   constructor(
     public feedService: FeedService,
-    public chatService: ChatService
+    public chatService: ChatService,
+    private camera: Camera
   ) {}
 
   ngOnInit() {
@@ -58,5 +61,39 @@ export class ChatPage implements OnInit {
   scrollToBottomAndClearValue() {
     this.input.value = '';
     this.content.scrollToBottom();
+  }
+
+  checkCardColor(userId: string, contentUserId: string, img: string) {
+    let result = 'none';
+    if (!img) {
+      if (userId === contentUserId) {
+        result = 'primary';
+      } else {
+        result = 'light';
+      }
+    }
+    return result;
+  }
+
+  onTakePicture(user: User) {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.chatContent.push({
+          img: 'data:image/jpeg;base64,' + imageData,
+          userId: user.id
+        });
+      },
+      err => {
+        // Handle error
+        console.log('Camera issue:' + err);
+      }
+    );
   }
 }
