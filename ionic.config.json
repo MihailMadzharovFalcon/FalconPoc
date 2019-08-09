@@ -1,0 +1,7 @@
+{
+  "name": "chat-poc",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen *ngIf="currentUser$ | async as currentUser">
+  <ion-infinite-scroll position="bottom" threshold="100%">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-list>
+    <ion-item
+      *ngFor="let content of chatContent"
+      lines="none"
+      class="ion-text-justify"
+      slot="start"
+    >
+      <ion-card
+        [color]="content.userId === currentUser.id ? 'primary' : 'light'"
+      >
+        <ion-card-content>
+          {{ content.message }}
+        </ion-card-content>
+      </ion-card>
+      <ion-avatar [slot]="content.userId === currentUser.id ? 'start' : 'end'">
+        <img [src]="currentUser.thumb" />
+      </ion-avatar>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="currentUser$ | async as currentUser">
+  <ion-toolbar>
+    <ion-input
+      clearInput
+      #input
+      (keydown.enter)="sendMsg(currentUser, input.value)"
+    ></ion-input>
+    <ion-buttons slot="primary">
+      <ion-button (click)="sendMsg(currentUser, input.value)">
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
