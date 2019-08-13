@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { IonContent } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { FeedService } from '../feed/feed.service';
 import { User } from '../mocks/types';
@@ -10,6 +10,7 @@ interface Conent {
   userId: string;
   message?: string;
   img?: string;
+  date: number;
 }
 
 @Component({
@@ -20,8 +21,18 @@ interface Conent {
 export class ChatPage implements OnInit {
   @ViewChild('input', { static: false })
   input: any;
+
   @ViewChild(IonContent, { static: false })
   content: IonContent;
+
+  @ViewChild('list', { read: ElementRef, static: false })
+  list: ElementRef;
+
+  @ViewChild(IonInfiniteScroll, { static: false })
+  infinitScroll: IonInfiniteScroll;
+
+  private isMessageSent: boolean;
+  private mutationObserver: MutationObserver;
   public chatUser: User;
   public currentUser$: Observable<User>;
   public chatContent: Conent[] = [];
@@ -35,15 +46,39 @@ export class ChatPage implements OnInit {
   ngOnInit() {
     this.currentUser$ = this.chatService.getCurrentUser();
     this.chatUser = this.chatService.getChatUser().value;
-    this.feedService.getContentItems().then(console.log);
+    this.feedService.getContentItems();
+  }
+
+  logScrollStart() {
+    this.isMessageSent = false;
+  }
+
+  ionViewWillEnter() {
+    this.mutationObserver = new MutationObserver(() => {
+      this.scrollToBottom();
+    });
+
+    this.mutationObserver.observe(this.list.nativeElement, {
+      childList: true
+    });
+
+    this.content.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    if (this.isMessageSent) {
+      this.content.scrollToBottom();
+    }
   }
 
   sendMsg(user: User) {
     if (this.input.value) {
       this.chatContent.push({
         userId: user.id,
-        message: this.input.value
+        message: this.input.value,
+        date: Date.now()
       });
+      this.isMessageSent = true;
       this.scrollToBottomAndClearValue();
     }
   }
@@ -52,15 +87,16 @@ export class ChatPage implements OnInit {
     if (this.input.value) {
       this.chatContent.push({
         userId: this.chatService.getChatUser().value.id,
-        message: this.input.value
+        message: this.input.value,
+        date: Date.now()
       });
+      this.isMessageSent = true;
       this.scrollToBottomAndClearValue();
     }
   }
 
   scrollToBottomAndClearValue() {
     this.input.value = '';
-    this.content.scrollToBottom();
   }
 
   checkCardColor(userId: string, contentUserId: string, img: string) {
@@ -87,7 +123,8 @@ export class ChatPage implements OnInit {
       imageData => {
         this.chatContent.push({
           img: 'data:image/jpeg;base64,' + imageData,
-          userId: user.id
+          userId: user.id,
+          date: Date.now()
         });
       },
       err => {
@@ -95,5 +132,34 @@ export class ChatPage implements OnInit {
         console.log('Camera issue:' + err);
       }
     );
+  }
+
+  loadData() {
+    setTimeout(() => {
+      this.chatContent.unshift(
+        ...[
+          {
+            img: '',
+            message: 'lorem',
+            userId: 'user',
+            date: Date.now()
+          },
+          {
+            img: '',
+            message: 'lorem',
+            userId: 'user',
+            date: Date.now()
+          },
+          {
+            img: '',
+            message: 'lorem',
+            userId: 'user',
+            date: Date.now()
+          }
+        ]
+      );
+
+      this.infinitScroll.complete();
+    }, 1000);
   }
 }
