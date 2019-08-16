@@ -31,23 +31,22 @@
     <ion-item
       *ngFor="let content of chatContent"
       lines="none"
-      slot="start"
-      class="ion-no-margin "
+      class="ion-no-padding"
     >
-      <ion-avatar
+      <ion-item
+        lines="none"
         *ngIf="content.userId === currentUser.id"
-        slot="start"
-        class="ion-no-margin ion-align-self-start"
+        [slot]="'start'"
       >
-        <img
-          [src]="
-            content.userId === currentUser.id
-              ? currentUser.thumb
-              : chatUser.thumb
-          "
-        />
-      </ion-avatar>
-      <ion-item lines="none" class="ion-align-items-end">
+        <ion-avatar slot="start" class="ion-align-self-start">
+          <img
+            [src]="
+              content.userId === currentUser.id
+                ? currentUser.thumb
+                : chatUser.thumb
+            "
+          />
+        </ion-avatar>
         <ion-label text-wrap class="message">
           <ion-text>
             {{ content.message }}
@@ -55,19 +54,27 @@
         </ion-label>
       </ion-item>
 
-      <ion-avatar
+      <ion-item
+        lines="none"
         *ngIf="content.userId !== currentUser.id"
+        class="ion-align-self-start"
         [slot]="'end'"
-        class="ion-no-margin ion-align-self-start"
       >
-        <img
-          [src]="
-            content.userId === currentUser.id
-              ? currentUser.thumb
-              : chatUser.thumb
-          "
-        />
-      </ion-avatar>
+        <ion-label text-wrap class="message">
+          <ion-text>
+            {{ content.message }}
+          </ion-text>
+        </ion-label>
+        <ion-avatar class="ion-no-margin ion-align-self-end">
+          <img
+            [src]="
+              content.userId !== currentUser.id
+                ? currentUser.thumb
+                : chatUser.thumb
+            "
+          />
+        </ion-avatar>
+      </ion-item>
     </ion-item>
   </ion-list>
 </ion-content>
