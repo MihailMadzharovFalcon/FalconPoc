@@ -28,8 +28,17 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
   <ion-list #list>
-    <ion-item *ngFor="let content of chatContent" lines="none" slot="start">
-      <ion-avatar *ngIf="content.userId === currentUser.id" [slot]="'start'">
+    <ion-item
+      *ngFor="let content of chatContent"
+      lines="none"
+      slot="start"
+      class="ion-no-margin "
+    >
+      <ion-avatar
+        *ngIf="content.userId === currentUser.id"
+        slot="start"
+        class="ion-no-margin ion-align-self-start"
+      >
         <img
           [src]="
             content.userId === currentUser.id
@@ -38,22 +47,18 @@
           "
         />
       </ion-avatar>
-      <ion-card
-        [color]="checkCardColor(content.userId, currentUser.id, content.img)"
-        [slot]="content.userId === currentUser.id ? 'start' : 'end'"
-      >
-        <ion-card-content *ngIf="content.message">
-          {{ content.message }}
-        </ion-card-content>
-        <ion-card-content *ngIf="content.img">
-          <ion-img [src]="content.img"></ion-img>
-        </ion-card-content>
-      </ion-card>
+      <ion-item lines="none" class="ion-align-items-end">
+        <ion-label text-wrap class="message">
+          <ion-text>
+            {{ content.message }}
+          </ion-text>
+        </ion-label>
+      </ion-item>
 
       <ion-avatar
         *ngIf="content.userId !== currentUser.id"
         [slot]="'end'"
-        class="ion-margin"
+        class="ion-no-margin ion-align-self-start"
       >
         <img
           [src]="
