@@ -41,9 +41,14 @@
         <ion-avatar slot="start" class="ion-align-self-start">
           <img [src]="currentUser.thumb" />
         </ion-avatar>
-        <ion-label text-wrap class="message">
+        <ion-label
+          text-wrap
+          class="message current-user-color"
+          *ngIf="!content.img"
+        >
           <ion-text> {{ content.message }} </ion-text>
         </ion-label>
+        <ion-img [src]="content.img"></ion-img>
       </ion-item>
 
       <ion-item
@@ -52,10 +57,15 @@
         class="ion-align-self-start"
         [slot]="'end'"
       >
-        <ion-label text-wrap class="message">
+        <ion-label
+          text-wrap
+          class="message second-user-color"
+          *ngIf="!content.img"
+        >
           <ion-text> {{ content.message }} </ion-text>
         </ion-label>
-        <ion-avatar class="ion-no-margin ion-align-self-end">
+        <ion-img [src]="content.img"></ion-img>
+        <ion-avatar slot="end" class="ion-align-self-end">
           <img [src]="chatUser.thumb" />
         </ion-avatar>
       </ion-item>
