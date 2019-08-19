@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll, IonInput } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { FeedService } from '../feed/feed.service';
 import { User } from '../mocks/types';
@@ -20,7 +20,7 @@ interface Conent {
 })
 export class ChatPage implements OnInit {
   @ViewChild('input', { static: false })
-  input: any;
+  input: IonInput;
 
   @ViewChild(IonContent, { static: false })
   content: IonContent;

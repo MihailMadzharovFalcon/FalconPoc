@@ -39,18 +39,10 @@
         [slot]="'start'"
       >
         <ion-avatar slot="start" class="ion-align-self-start">
-          <img
-            [src]="
-              content.userId === currentUser.id
-                ? currentUser.thumb
-                : chatUser.thumb
-            "
-          />
+          <img [src]="currentUser.thumb" />
         </ion-avatar>
         <ion-label text-wrap class="message">
-          <ion-text>
-            {{ content.message }}
-          </ion-text>
+          <ion-text> {{ content.message }} </ion-text>
         </ion-label>
       </ion-item>
 
@@ -61,18 +53,10 @@
         [slot]="'end'"
       >
         <ion-label text-wrap class="message">
-          <ion-text>
-            {{ content.message }}
-          </ion-text>
+          <ion-text> {{ content.message }} </ion-text>
         </ion-label>
         <ion-avatar class="ion-no-margin ion-align-self-end">
-          <img
-            [src]="
-              content.userId !== currentUser.id
-                ? currentUser.thumb
-                : chatUser.thumb
-            "
-          />
+          <img [src]="chatUser.thumb" />
         </ion-avatar>
       </ion-item>
     </ion-item>
