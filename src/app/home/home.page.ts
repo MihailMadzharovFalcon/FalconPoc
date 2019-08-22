@@ -12,10 +12,10 @@ export class HomePage {
   ionViewDidEnter() {}
 
   authenticate() {
-    const authConfig: AuthConfiguration = {
-      authServerBaseUrl: 'https://accounts-staging.falcon.io',
-      clientId: 'falcon'
-    };
+    // const authConfig: AuthConfiguration = {
+    //   authServerBaseUrl: 'https://accounts-staging.falcon.io',
+    //   clientId: 'falcon'
+    // };
 
     // authenticateWithFalcon(authConfig).then(console.log);
 
