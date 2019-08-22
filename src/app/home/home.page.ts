@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthConfiguration, authenticateWithFalcon } from '@falconio/core-auth/dist/core-auth.min.js';
+// import { AuthConfiguration, authenticateWithFalcon } from '@falconio/core-auth/dist/core-auth.min.js';
 import { KeycloakService } from '../keycloak.service';
 @Component({
   selector: 'app-home',
@@ -17,7 +17,7 @@ export class HomePage {
       clientId: 'falcon'
     };
 
-    authenticateWithFalcon(authConfig).then(console.log);
+    // authenticateWithFalcon(authConfig).then(console.log);
 
     // this.keycloack.init().then(a => {
     //   console.log(a);
