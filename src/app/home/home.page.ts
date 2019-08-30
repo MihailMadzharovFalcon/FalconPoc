@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { AuthConfiguration, authenticateWithFalcon } from '@falconio/core-auth/dist/core-auth.min.js';
+import { AuthConfiguration, authenticateWithFalcon, keycloakInit } from '@falconio/core-auth/dist/core-auth.min.js';
 import { KeycloakService } from '../keycloak.service';
 @Component({
   selector: 'app-home',
@@ -8,19 +8,18 @@ import { KeycloakService } from '../keycloak.service';
 })
 export class HomePage {
   constructor(private keycloack: KeycloakService) {}
-
+  public token: any;
   ionViewDidEnter() {}
 
   authenticate() {
-    // const authConfig: AuthConfiguration = {
-    //   authServerBaseUrl: 'https://accounts-staging.falcon.io',
-    //   clientId: 'falcon'
-    // };
-
-    // authenticateWithFalcon(authConfig).then(console.log);
-
-    // this.keycloack.init().then(a => {
-    //   console.log(a);
-    // });
+    const authConfig: AuthConfiguration = {
+      authServerBaseUrl: 'https://accounts-staging.falcon.io',
+      clientId: 'falcon'
+    };
+    keycloakInit(authConfig).then(token => {
+      console.log(token);
+      this.token = token;
+    });
+    authenticateWithFalcon(authConfig).then(token => {});
   }
 }
