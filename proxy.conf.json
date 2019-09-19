@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://staging.falcon.io",
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
