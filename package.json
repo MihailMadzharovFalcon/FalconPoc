@@ -20,24 +20,40 @@
     "@angular/platform-browser": "~8.1.2",
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
+<<<<<<< HEAD
     "@falconio/core-auth": "^5.1.0",
     "@ionic-native/camera": "^5.12.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/http": "^5.14.0",
+=======
+    "@falconio/core-auth": "^5.0.2",
+    "@ionic-native/camera": "^5.12.0",
+    "@ionic-native/core": "^5.0.0",
+    "@ionic-native/in-app-browser": "^5.13.0",
+>>>>>>> c6192aba9618602e5ae467aa9213b0114090503a
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
-    "@ionic/angular": "^4.7.4",
+    "@ionic/angular": "^4.8.1",
+    "@ionic/core": "^4.8.1",
     "@ionic/lab": "^2.0.7",
     "cordova-android": "^8.0.0",
     "cordova-browser": "6.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-advanced-http": "^2.1.1",
     "cordova-plugin-camera": "^4.1.0",
+<<<<<<< HEAD
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-ionic": "^5.4.4",
     "core-js": "^2.5.4",
     "faker": "4.1.0",
     "ionic-native-http-connection-backend": "^6.1.1",
+=======
+    "cordova-plugin-inappbrowser": "^3.1.0",
+    "cordova-plugin-ionic": "^5.4.4",
+    "core-js": "^2.5.4",
+    "faker": "4.1.0",
+    "ionic": "^5.2.7",
+>>>>>>> c6192aba9618602e5ae467aa9213b0114090503a
     "keycloak-js": "^6.0.1",
     "rxjs": "~6.5.1",
     "time-ago-pipe": "^1.3.2",
@@ -98,7 +114,11 @@
         "MIN_BACKGROUND_DURATION": "30",
         "UPDATE_API": "https://api.ionicjs.com"
       },
+<<<<<<< HEAD
       "cordova-plugin-advanced-http": {}
+=======
+      "cordova-plugin-inappbrowser": {}
+>>>>>>> c6192aba9618602e5ae467aa9213b0114090503a
     },
     "platforms": [
       "android",
